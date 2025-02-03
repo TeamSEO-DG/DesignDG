@@ -36,29 +36,3 @@ function cargarYMostrarBanner(medida) {
     };
 
     // Actualizar la información del banner
-    document.getElementById('banner-info').innerHTML = `
-      <p>Mes: <strong>${mes}</strong></p>
-      <p>Campaña: <strong>${campaign}</strong></p>
-      <p>Versión: <strong>${version}</strong></p>
-    `;
-}
-
-// Manejo del selector personalizado
-document.querySelectorAll('.select-box__option').forEach(option => {
-    option.addEventListener('click', function() {
-        const selectedValue = this.innerText;
-        
-        // Actualizar el texto del select personalizado
-        document.querySelector('.select-box__input-text').innerText = selectedValue;
-
-        // Cambiar el banner al tamaño seleccionado
-        cargarYMostrarBanner(selectedValue);
-    });
-});
-
-// Cargar banner inicial
-window.addEventListener('load', () => {
-    const medidaInicial = "970x250"; // Valor por defecto
-    document.querySelector('.select-box__input-text').innerText = medidaInicial;
-    cargarYMostrarBanner(medidaInicial);
-});
