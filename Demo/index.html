@@ -18,6 +18,12 @@
     #container {
       display: flex;
       align-items: center;
+      flex-direction: column; /* Cambiamos la dirección a columna */
+    }
+    #banner-info {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 20px; /* Espacio entre la info y el banner */
     }
     #banner-container {
       width: 970px; /* Ancho inicial del banner */
@@ -25,6 +31,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      border: 1px solid #ccc; /* Borde gris */
     }
     #banner {
       border: none;
@@ -34,116 +41,50 @@
       width: 200px;
       padding: 10px;
       border: 1px solid #ccc;
-      margin-left: 20px;
+      margin-top: 20px;
     }
-    #panel button {
-      margin-bottom: 5px;
-      padding: 8px 12px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    #panel button.active {
-      background-color: #0056b3; /* Color de fondo azul */
-    }
+
     @media (max-height: 600px) {
       body {
         align-items: flex-start;
       }
-      #container {
+     /*  #container {
         flex-direction: column;
+      } */
+      #banner-container{
+        margin-top: 10px;
       }
       #panel {
         margin-left: 0;
         margin-top: 20px;
+      }
+      #banner-info{
+        margin-top: 10px;
       }
     }
   </style>
 </head>
 <body>
   <div id="container">
+    <div id="banner-info"></div>
     <div id="banner-container">
-      <iframe id="banner" title="Banner"></iframe>
+        <iframe id="banner" title="Banner"></iframe>
     </div>
     <div id="panel">
-      <button id="btn970x250" class="active">970x250</button>
-      <button id="btn300x600">300x600</button>
-      <button id="btn300x250">300x250</button>
-      <button id="btn320x100">320x100</button>
-      <button id="btn160x600">160x600</button>
-      <button id="btn728x90">728x90</button>
+        <select id="size-selector">
+            <option value="970x250">970x250</option>
+            <option value="300x600">300x600</option>
+            <option value="300x250">300x250</option>
+            <option value="320x100">320x100</option>
+            <option value="160x600">160x600</option>
+            <option value="728x90">728x90</option>
+        </select>
     </div>
   </div>
   <script>
     // Función para obtener los parámetros de la URL (mes, campaign, version)
     function obtenerParametroURL(nombre, url = window.location.href) {
-      nombre = nombre.replace(/[\[\]]/g, '\\$&');
-      const regex = new RegExp('[?&]' + nombre + '(=([^&#]*)|&|#|$)');
+      nombre = nombre.replace(/[\[\]]/g, '\\<span class="math-inline">&'\);
+const regex \= new RegExp\('\[?&\]' \+ nombre \+ '\(\=\(\[^&\#\]\*\)\|&\|\#\|</span>)');
       const resultados = regex.exec(url);
-      return resultados ? decodeURIComponent(resultados[2].replace(/\+/g, ' ')) : null;
-    }
-
-    // Función para actualizar el botón activo
-    function actualizarBotonActivo(boton) {
-      const botones = document.querySelectorAll('#panel button');
-      botones.forEach(btn => btn.classList.remove('active'));
-      boton.classList.add('active');
-    }
-
-    // Objeto que mapea los IDs de los botones a sus respectivas medidas
-    const medidasBanners = {
-      'btn970x250': '970x250',
-      'btn300x600': '300x600',
-      'btn300x250': '300x250',
-      'btn320x100': '320x100',
-      'btn160x600': '160x600',
-      'btn728x90': '728x90',
-    };
-
-    // Función para cargar y mostrar el banner
-    function cargarYMostrarBanner(idBoton) {
-      const mes = obtenerParametroURL('mes');
-      const campaign = obtenerParametroURL('campaign');
-      const version = obtenerParametroURL('version') || 'v1';
-
-      // Validación básica de parámetros
-      if (!mes || !campaign) {
-        console.error('Los parámetros "mes" y "campaign" son obligatorios.');
-        // Aquí puedes mostrar un mensaje de error al usuario
-        return;
-      }
-
-      const medida = medidasBanners[idBoton]; // Obtener la medida del objeto
-      const rutaBanner = `banners/${mes}/${campaign}/${version}/${medida}/index.html`;
-      const bannerIframe = document.getElementById('banner');
-
-      bannerIframe.src = rutaBanner;
-      bannerIframe.width = medida.split('x')[0];
-      bannerIframe.height = medida.split('x')[1];
-
-      // Manejo de error simple
-      bannerIframe.onerror = () => {
-        console.error(`Error al cargar el banner: ${rutaBanner}`);
-        bannerIframe.src = ''; // Limpiar el iframe
-        // Aquí puedes mostrar un mensaje de error al usuario
-      };
-    }
-
-    // Evento click en los botones
-    document.querySelectorAll('#panel button').forEach(boton => {
-      boton.addEventListener('click', () => {
-        cargarYMostrarBanner(boton.id); // Pasar el ID del botón
-        actualizarBotonActivo(boton);
-      });
-    });
-
-    // Mostrar el banner 970x250 por defecto al cargar la página
-    window.addEventListener('load', () => {
-        const botonInicial = document.getElementById('btn970x250');
-        cargarYMostrarBanner(botonInicial.id);
-        actualizarBotonActivo(botonInicial);
-    });
-  </script>
-</body>
-</html>
+      return resultados ? decodeURIComponent(resultados
