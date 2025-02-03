@@ -43,14 +43,22 @@ function cargarYMostrarBanner(medida) {
     `;
 }
 
-// Evento change en el selector
-document.getElementById('size-selector').addEventListener('change', () => {
-    const medidaSeleccionada = document.getElementById('size-selector').value;
-    cargarYMostrarBanner(medidaSeleccionada);
+// Manejo del selector personalizado
+document.querySelectorAll('.select-box__option').forEach(option => {
+    option.addEventListener('click', function() {
+        const selectedValue = this.innerText;
+        
+        // Actualizar el texto del select personalizado
+        document.querySelector('.select-box__input-text').innerText = selectedValue;
+
+        // Cambiar el banner al tamaño seleccionado
+        cargarYMostrarBanner(selectedValue);
+    });
 });
 
-// Mostrar el banner 970x250 por defecto al cargar la página
+// Cargar banner inicial
 window.addEventListener('load', () => {
-    const medidaInicial = document.getElementById('size-selector').value;
+    const medidaInicial = "970x250"; // Valor por defecto
+    document.querySelector('.select-box__input-text').innerText = medidaInicial;
     cargarYMostrarBanner(medidaInicial);
 });

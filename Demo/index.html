@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
@@ -10,17 +10,24 @@
   <div id="container">
     <div id="banner-info"></div>
     <div id="banner-container">
-        <iframe id="banner" title="Banner"></iframe>
+      <iframe id="banner" title="Banner"></iframe>
     </div>
     <div id="panel">
-        <select id="size-selector">
-            <option value="970x250">970x250</option>
-            <option value="300x600">300x600</option>
-            <option value="300x250">300x250</option>
-            <option value="320x100">320x100</option>
-            <option value="160x600">160x600</option>
-            <option value="728x90">728x90</option>
-        </select>
+      <div class="select-box">
+        <div class="select-box__current" tabindex="1">
+          <div class="select-box__value">
+            <p class="select-box__input-text">970x250</p>
+          </div>
+          <img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg" alt="Arrow Icon" aria-hidden="true">
+        </div>
+        <ul class="select-box__list">
+          <li><label class="select-box__option" for="300x600">300x600</label></li>
+          <li><label class="select-box__option" for="300x250">300x250</label></li>
+          <li><label class="select-box__option" for="320x100">320x100</label></li>
+          <li><label class="select-box__option" for="160x600">160x600</label></li>
+          <li><label class="select-box__option" for="728x90">728x90</label></li>
+        </ul>
+      </div>
     </div>
   </div>
   <script src="script.js"></script>
