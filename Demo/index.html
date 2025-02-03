@@ -1,157 +1,53 @@
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Previsualizador de Banners Publicitarios</title>
-  <style>
-    * {
-        box-sizing: border-box;
-    }
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-    }
-    #container {
-      display: flex;
-      align-items: center;
-      flex-direction: column; /* Cambiamos la dirección a columna */
-    }
-    #banner-info {
-      width: 100%;
-      text-align: center;
-      margin-bottom: 20px; /* Espacio entre la info y el banner */
-    }
-    #banner-container {
-      width: auto; /* Ajuste automático del ancho */
-      max-width: 100%; /* Ancho máximo del 100% del contenedor padre */
-      height: auto; /* Ajuste automático del alto */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 1px solid #ccc; /* Borde gris */
-      overflow: hidden; /* Evita que el iframe sobresalga del contenedor */
-    }
-    #banner {
-      border: none;
-    }
-    #panel {
-      width: 200px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      margin-top: 20px;
+<style>
+  #banner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease-in-out; /* Suaviza los cambios de tamaño */
+  }
+
+  #container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 400px; /* Asegura espacio suficiente */
+  }
+</style>
+
+<script>
+  function cargarYMostrarBanner(medida) {
+    const mes = obtenerParametroURL('mes');
+    const campaign = obtenerParametroURL('campaign');
+    const version = obtenerParametroURL('version') || 'v1';
+
+    if (!mes || !campaign) {
+      console.error('Los parámetros "mes" y "campaign" son obligatorios.');
+      return;
     }
 
-    @media (max-height: 600px) {
-      body {
-        align-items: flex-start;
-      }
-      #banner-container{
-        margin-top: 10px;
-      }
-      #panel {
-        margin-left: 0;
-        margin-top: 20px;
-      }
-      #banner-info{
-        margin-top: 10px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div id="container">
-    <div id="banner-info"></div>
-    <div id="banner-container">
-        <iframe id="banner" title="Banner"></iframe>
-    </div>
-    <div id="panel">
-        <select id="size-selector">
-            <option value="970x250">970x250</option>
-            <option value="300x600">300x600</option>
-            <option value="300x250">300x250</option>
-            <option value="320x100">320x100</option>
-            <option value="160x600">160x600</option>
-            <option value="728x90">728x90</option>
-        </select>
-    </div>
-  </div>
-  <script>
-    // Función para obtener los parámetros de la URL (mes, campaign, version)
-    function obtenerParametroURL(nombre, url = window.location.href) {
-      nombre = nombre.replace(/[\[\]]/g, '\\$&');
-      const regex = new RegExp('[?&]' + nombre + '(=([^&#]*)|&|#|$)');
-      const resultados = regex.exec(url);
-      return resultados ? decodeURIComponent(resultados[2].replace(/\+/g, ' ')) : null;
-    }
+    const rutaBanner = `banners/${mes}/${campaign}/${version}/${medida}/index.html`;
+    const bannerIframe = document.getElementById('banner');
+    const bannerContainer = document.getElementById('banner-container');
 
-    // Objeto que mapea los valores del selector a sus respectivas medidas
-    const medidasBanners = {
-      '970x250': '970x250',
-      '300x600': '300x600',
-      '300x250': '300x250',
-      '320x100': '320x100',
-      '160x600': '160x600',
-      '728x90': '728x90',
+    const [width, height] = medida.split('x');
+
+    // Actualizar el tamaño dinámicamente
+    bannerContainer.style.width = `${width}px`;
+    bannerContainer.style.height = `${height}px`;
+    bannerIframe.width = width;
+    bannerIframe.height = height;
+    bannerIframe.src = rutaBanner;
+
+    bannerIframe.onerror = () => {
+      console.error(`Error al cargar el banner: ${rutaBanner}`);
+      bannerIframe.src = ''; // Limpiar el iframe en caso de error
     };
 
-    // Función para cargar y mostrar el banner
-    function cargarYMostrarBanner(medida) {
-      const mes = obtenerParametroURL('mes');
-      const campaign = obtenerParametroURL('campaign');
-      const version = obtenerParametroURL('version') || 'v1';
-
-      // Validación básica de parámetros
-      if (!mes || !campaign) {
-        console.error('Los parámetros "mes" y "campaign" son obligatorios.');
-        // Aquí puedes mostrar un mensaje de error al usuario
-        return;
-      }
-
-      const rutaBanner = `banners/${mes}/${campaign}/${version}/${medida}/index.html`;
-      const bannerIframe = document.getElementById('banner');
-      const bannerContainer = document.getElementById('banner-container');
-
-      bannerIframe.src = rutaBanner;
-      bannerIframe.width = medida.split('x')[0];
-      bannerIframe.height = medida.split('x')[1];
-
-      // Ajustar el tamaño del contenedor del banner
-      bannerContainer.style.width = `${medida.split('x')[0]}px`;
-      bannerContainer.style.height = `${medida.split('x')[1]}px`;
-
-      // Manejo de error simple
-      bannerIframe.onerror = () => {
-        console.error(`Error al cargar el banner: ${rutaBanner}`);
-        bannerIframe.src = ''; // Limpiar el iframe
-        // Aquí puedes mostrar un mensaje de error al usuario
-      };
-
-      // Actualizar la información del banner
-      document.getElementById('banner-info').innerHTML = `
-        <p>Mes: <strong>${mes}</strong></p>
-        <p>Campaña: <strong>${campaign}</strong></p>
-        <p>Versión: <strong>${version}</strong></p>
-      `;
-    }
-
-    // Obtener el selector
-    const sizeSelector = document.getElementById('size-selector');
-
-    // Evento change en el selector
-    sizeSelector.addEventListener('change', () => {
-      const medidaSeleccionada = sizeSelector.value;
-      cargarYMostrarBanner(medidaSeleccionada);
-    });
-
-    // Mostrar el banner 970x250 por defecto al cargar la página
-    window.addEventListener('load', () => {
-        const medidaInicial = sizeSelector.value;
-        cargarYMostrarBanner(medidaInicial);
-    });
-  </script>
-</body>
-</html>
+    document.getElementById('banner-info').innerHTML = `
+      <p>Mes: <strong>${mes}</strong></p>
+      <p>Campaña: <strong>${campaign}</strong></p>
+      <p>Versión: <strong>${version}</strong></p>
+    `;
+  }
+</script>
