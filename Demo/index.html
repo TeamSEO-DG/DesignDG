@@ -1,53 +1,28 @@
-<style>
-  #banner-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #ccc;
-    transition: all 0.3s ease-in-out; /* Suaviza los cambios de tamaño */
-  }
-
-  #container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 400px; /* Asegura espacio suficiente */
-  }
-</style>
-
-<script>
-  function cargarYMostrarBanner(medida) {
-    const mes = obtenerParametroURL('mes');
-    const campaign = obtenerParametroURL('campaign');
-    const version = obtenerParametroURL('version') || 'v1';
-
-    if (!mes || !campaign) {
-      console.error('Los parámetros "mes" y "campaign" son obligatorios.');
-      return;
-    }
-
-    const rutaBanner = `banners/${mes}/${campaign}/${version}/${medida}/index.html`;
-    const bannerIframe = document.getElementById('banner');
-    const bannerContainer = document.getElementById('banner-container');
-
-    const [width, height] = medida.split('x');
-
-    // Actualizar el tamaño dinámicamente
-    bannerContainer.style.width = `${width}px`;
-    bannerContainer.style.height = `${height}px`;
-    bannerIframe.width = width;
-    bannerIframe.height = height;
-    bannerIframe.src = rutaBanner;
-
-    bannerIframe.onerror = () => {
-      console.error(`Error al cargar el banner: ${rutaBanner}`);
-      bannerIframe.src = ''; // Limpiar el iframe en caso de error
-    };
-
-    document.getElementById('banner-info').innerHTML = `
-      <p>Mes: <strong>${mes}</strong></p>
-      <p>Campaña: <strong>${campaign}</strong></p>
-      <p>Versión: <strong>${version}</strong></p>
-    `;
-  }
-</script>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Previsualizador de Banners Publicitarios</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="container">
+    <div id="banner-info"></div>
+    <div id="banner-container">
+        <iframe id="banner" title="Banner"></iframe>
+    </div>
+    <div id="panel">
+        <select id="size-selector">
+            <option value="970x250">970x250</option>
+            <option value="300x600">300x600</option>
+            <option value="300x250">300x250</option>
+            <option value="320x100">320x100</option>
+            <option value="160x600">160x600</option>
+            <option value="728x90">728x90</option>
+        </select>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
