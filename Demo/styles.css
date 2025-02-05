@@ -1,10 +1,11 @@
 * {
     box-sizing: border-box;
+    font-family: 'Nunito Sans', sans-serif; /* Aplicar Nunito Sans a todo */
 }
 
 body {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     min-height: 100vh;
     margin: 0;
@@ -38,7 +39,6 @@ body {
 #top-bar #previsualizador-text{
     font-weight: bold;
     font-size: 30px;
-    margin-left: 270px;
 }
 
 #container {
@@ -62,7 +62,6 @@ body {
 
 #banner-info p{
     margin: 5px;
-	text-transform: uppercase;
 }
 
 #selector-vertodos-container{
@@ -76,6 +75,7 @@ body {
     width: 150px;
     padding: 5px;
     border: 1px solid #ccc;
+    font-family: 'Nunito Sans', sans-serif; /* Aplicar Nunito Sans al selector */
 }
 
 #ver-todos{
@@ -83,6 +83,7 @@ body {
     background-color: #f0f0f0;
     border: 1px solid #ccc;
     cursor: pointer;
+    font-family: 'Nunito Sans', sans-serif; /* Aplicar Nunito Sans al botón */
 }
 
 #banner-container {
