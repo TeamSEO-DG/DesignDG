@@ -62,6 +62,7 @@ body {
 
 #banner-info p{
     margin: 5px;
+	text-transform: uppercase;
 }
 
 #selector-vertodos-container{
