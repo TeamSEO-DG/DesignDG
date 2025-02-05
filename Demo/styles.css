@@ -43,21 +43,21 @@ body {
 
 #container {
     display: flex;
-    align-items: center;
+    align-items: center; /* Centrar el banner */
     flex-direction: column;
     width: 100%; /* Ocupar todo el ancho disponible */
-    padding-top: 60px; /* Espacio para la barra superior */
+    padding-top: 80px; /* Espacio para la barra superior */
 }
 
 #info-selector-container{
     display: flex;
-    justify-content: space-around;
-    width: 70%;
-    margin-top: 20px;
+    justify-content: space-between;
+    width: 95%;
+    margin-bottom: 20px;
 }
-
 #banner-info {
     font-weight: 600;
+    margin-right: auto; /* Empujar el selector hacia la derecha */
 }
 
 #banner-info p{
@@ -68,6 +68,7 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
+    margin-left: auto; /* Empujar el selector hacia la derecha */
 }
 
 #size-selector {
@@ -92,7 +93,6 @@ body {
     align-items: center;
     border: 1px solid #ccc; /* Borde gris */
     overflow: hidden; /* Evita que el iframe sobresalga del contenedor */
-    margin-top: 20px;
 }
 
 #banner {
@@ -111,6 +111,22 @@ body {
     border: 1px solid #ccc;
 }
 
-@media (max-height: 600px) {
-    /* Ajustes para pantallas pequeñas si son necesarios */
+@media (max-width: 768px) {
+    #info-selector-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #selector-vertodos-container {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    #banner-container {
+        margin-top: 20px;
+    }
+    #top-bar #previsualizador-text{
+        font-size: 20px;
+        margin-left: 0;
+    }
 }
