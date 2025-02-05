@@ -104,7 +104,7 @@
       '728x90': '728x90',
     };
 
-    // Función para cargar y mostrar el banner
+   // Función para cargar y mostrar el banner
     function cargarYMostrarBanner(medida) {
       const mes = obtenerParametroURL('mes');
       const campaign = obtenerParametroURL('campaign');
@@ -117,7 +117,8 @@
         return;
       }
 
-      const rutaBanner = `banners/<span class="math-inline">\{mes\}/</span>{campaign}/<span class="math-inline">\{version\}/</span>{medida}/index.html`;
+      // Corregido: la variable medida se interpola dentro de las llaves y las comillas
+      const rutaBanner = `banners/${mes}/${campaign}/${version}/${medida}/index.html`;
       const bannerIframe = document.getElementById('banner');
       const bannerContainer = document.getElementById('banner-container');
 
@@ -136,7 +137,7 @@
         // Aquí puedes mostrar un mensaje de error al usuario
       };
 
- // Actualizar la información del banner
+      // Actualizar la información del banner
       document.getElementById('banner-info').innerHTML = `
         <p>Mes: <strong>${mes}</strong></p>
         <p>Campaña: <strong>${campaign}</strong></p>
