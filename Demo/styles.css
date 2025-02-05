@@ -1,79 +1,116 @@
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
 
 body {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    margin: 0;
+    flex-direction: column; /* Alinear elementos verticalmente */
 }
 
-/* Barra superior */
 #top-bar {
-    position: fixed;
+    background-color: #f0f0f0; /* Color de fondo para la barra superior */
+    width: 100%;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-around; /* Distribuir espacio entre elementos */
+    align-items: center;
+    position: fixed; /* Fijar la barra en la parte superior */
     top: 0;
     left: 0;
+    z-index: 10; /* Asegurar que la barra esté por encima del contenido */
+}
+
+#top-bar .logo-container {
+    display: flex;
+    align-items: center;
     width: 100%;
-    height: 60px;
-    display: flex;
-    align-items: center;
     justify-content: space-between;
-    background: white;
-    padding: 10px 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 100;
 }
 
-/* Contenedor de logos */
-.logo-container {
-    display: flex;
-    align-items: center;
+#top-bar .logo-container img {
+    height: 40px; /* Altura de los logos */
 }
 
-.logo {
-    height: 30px;
-	padding:0 30px 0 30px;
-}
-
-/* Información del banner */
-#banner-info {
-    flex: 1;
-    text-align: center;
-    font-size: 16px;
+#top-bar #previsualizador-text{
     font-weight: bold;
+    font-size: 30px;
+    margin-left: 270px;
 }
 
-/* Selector de tamaño */
-#panel select {
-    padding: 8px;
-    font-size: 16px;
-}
-
-/* Contenedor principal */
 #container {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    margin-top: 80px; /* Espacio para la barra superior */
+    flex-direction: column;
+    width: 100%; /* Ocupar todo el ancho disponible */
+    padding-top: 60px; /* Espacio para la barra superior */
 }
 
-/* Contenedor del banner */
+#info-selector-container{
+    display: flex;
+    justify-content: space-around;
+    width: 70%;
+    margin-top: 20px;
+}
+
+#banner-info {
+    font-weight: 600;
+}
+
+#banner-info p{
+    margin: 5px;
+}
+
+#selector-vertodos-container{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#size-selector {
+    width: 150px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+#ver-todos{
+    padding: 6px 12px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
 #banner-container {
+    width: auto; /* Ajuste automático del ancho */
+    max-width: 100%; /* Ancho máximo del 100% del contenedor padre */
+    height: auto; /* Ajuste automático del alto */
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #ccc;
-    transition: all 0.3s ease-in-out;
-    min-height: 100px;
+    border: 1px solid #ccc; /* Borde gris */
+    overflow: hidden; /* Evita que el iframe sobresalga del contenedor */
+    margin-top: 20px;
 }
 
-/* Estilo del iframe */
 #banner {
     border: none;
-    overflow: hidden;
+}
+
+#all-banners-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los banners se envuelvan en varias líneas */
+    justify-content: center;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.banner-item {
+    border: 1px solid #ccc;
+}
+
+@media (max-height: 600px) {
+    /* Ajustes para pantallas pequeñas si son necesarios */
 }
