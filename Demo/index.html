@@ -6,7 +6,7 @@
   <title>Previsualizador de Banners Publicitarios</title>
   <style>
     * {
-        box-sizing: border-box;
+      box-sizing: border-box;
     }
     body {
       display: flex;
@@ -14,16 +14,43 @@
       align-items: center;
       min-height: 100vh;
       margin: 0;
+      flex-direction: column; /* Alinear elementos verticalmente */
+    }
+    #top-bar {
+      background-color: #f0f0f0; /* Color de fondo para la barra superior */
+      width: 100%;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between; /* Distribuir espacio entre elementos */
+      align-items: center;
+      position: fixed; /* Fijar la barra en la parte superior */
+      top: 0;
+      left: 0;
+      z-index: 10; /* Asegurar que la barra esté por encima del contenido */
+    }
+    #top-bar .logo-container {
+      display: flex;
+      align-items: center;
+    }
+    #top-bar .logo-container img {
+      height: 40px; /* Altura de los logos */
+      margin-right: 20px; /* Espacio entre logos */
+    }
+    #top-bar #banner-info {
+      text-align: center;
+      margin-right: auto;
+    }
+    #top-bar #size-selector {
+      width: 150px;
+      padding: 5px;
+      border: 1px solid #ccc;
     }
     #container {
       display: flex;
       align-items: center;
-      flex-direction: column; /* Cambiamos la dirección a columna */
-    }
-    #banner-info {
-      width: 100%;
-      text-align: center;
-      margin-bottom: 20px; /* Espacio entre la info y el banner */
+      flex-direction: column;
+      width: 100%; /* Ocupar todo el ancho disponible */
+      padding-top: 60px; /* Espacio para la barra superior */
     }
     #banner-container {
       width: auto; /* Ajuste automático del ancho */
@@ -38,45 +65,24 @@
     #banner {
       border: none;
     }
-    #panel {
-      width: 200px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      margin-top: 20px;
-    }
 
     @media (max-height: 600px) {
-      body {
-        align-items: flex-start;
-      }
-      #banner-container{
-        margin-top: 10px;
-      }
-      #panel {
-        margin-left: 0;
-        margin-top: 20px;
-      }
-      #banner-info{
-        margin-top: 10px;
-      }
+        /* Ajustes para pantallas pequeñas si son necesarios */
     }
   </style>
 </head>
 <body>
-  <div id="container">
+  <div id="top-bar">
+    <div class="logo-container">
+      <img src="https://www.digitalgroup.com/wp-content/uploads/2023/09/Logo_color_negro.svg" alt="Logo Digital Group" id="logo-dg">
+      <img src="https://www.bintercanarias.com/assets/icons/Logo.svg" alt="Logo Binter" id="logo-binter">
+    </div>
     <div id="banner-info"></div>
+    <select id="size-selector"></select>
+  </div>
+  <div id="container">
     <div id="banner-container">
         <iframe id="banner" title="Banner"></iframe>
-    </div>
-    <div id="panel">
-        <select id="size-selector">
-            <option value="970x250">970x250</option>
-            <option value="300x600">300x600</option>
-            <option value="300x250">300x250</option>
-            <option value="320x100">320x100</option>
-            <option value="160x600">160x600</option>
-            <option value="728x90">728x90</option>
-        </select>
     </div>
   </div>
   <script>
@@ -111,7 +117,7 @@
         return;
       }
 
-      const rutaBanner = `banners/${mes}/${campaign}/${version}/${medida}/index.html`;
+      const rutaBanner = `banners/<span class="math-inline">\{mes\}/</span>{campaign}/<span class="math-inline">\{version\}/</span>{medida}/index.html`;
       const bannerIframe = document.getElementById('banner');
       const bannerContainer = document.getElementById('banner-container');
 
@@ -130,7 +136,7 @@
         // Aquí puedes mostrar un mensaje de error al usuario
       };
 
-      // Actualizar la información del banner
+ // Actualizar la información del banner
       document.getElementById('banner-info').innerHTML = `
         <p>Mes: <strong>${mes}</strong></p>
         <p>Campaña: <strong>${campaign}</strong></p>
@@ -140,6 +146,14 @@
 
     // Obtener el selector
     const sizeSelector = document.getElementById('size-selector');
+
+    // Crear las opciones del selector a partir del objeto medidasBanners
+    for (const medida in medidasBanners) {
+      const option = document.createElement('option');
+      option.value = medida;
+      option.text = medida;
+      sizeSelector.add(option);
+    }
 
     // Evento change en el selector
     sizeSelector.addEventListener('change', () => {
